@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Modern Wars Reconstructed</title>
+<meta name="description" content="Progress tracker for an independent Godot reconstruction of Modern Wars.">
+<style>
+  :root { --bg:#0e1116; --card:#161b22; --text:#e6edf3; --muted:#8b949e; --bar:#232a33; --fill:#e5484d; --line:#2a313c; }
+  @media (prefers-color-scheme: light) {
+    :root { --bg:#f6f7f9; --card:#ffffff; --text:#1b1f24; --muted:#5b6571; --bar:#e4e7eb; --fill:#d6333a; --line:#d8dce1; }
+  }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--text); font:16px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  main { max-width:640px; margin:0 auto; padding:48px 16px 64px; }
+  h1 { font-size:clamp(1.8rem, 6vw, 2.6rem); margin:0 0 8px; letter-spacing:-0.02em; }
+  .sub { color:var(--muted); margin:0 0 32px; }
+  ul { list-style:none; margin:0; padding:0; background:var(--card); border:1px solid var(--line); border-radius:12px; overflow:hidden; }
+  li { padding:16px 20px; border-top:1px solid var(--line); }
+  li:first-child { border-top:0; padding:20px; }
+  .row { display:flex; justify-content:space-between; align-items:baseline; gap:12px; }
+  .name { font-weight:600; }
+  li:first-child .name { font-size:1.15rem; }
+  .pct { font-variant-numeric:tabular-nums; color:var(--muted); }
+  li:first-child .pct { color:var(--text); font-weight:700; font-size:1.15rem; }
+  .bar { height:8px; background:var(--bar); border-radius:999px; margin-top:10px; overflow:hidden; }
+  .fill { height:100%; background:var(--fill); border-radius:999px; }
+  footer { color:var(--muted); font-size:.85rem; margin-top:24px; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Modern Wars Reconstructed</h1>
+  <p class="sub">Independent, from-scratch Godot reconstruction. Research phase.</p>
+  <ul id="list"></ul>
+  <footer>Unofficial fan project, not affiliated with the original game. No original code or assets are used.</footer>
+</main>
+<script>
+  // Edit these numbers as systems are verified against the original game (0-100).
+  var items = [
+    { name: "Fully Reconstructed", pct: 0.0 },
+    { name: "Map & Geography", pct: 0.0 },
+    { name: "Game Clock & Speed", pct: 0.0 },
+    { name: "Movement & Terrain", pct: 0.0 },
+    { name: "Combat & Fronts", pct: 0.0 },
+    { name: "Mobilisation & Supply", pct: 0.0 },
+    { name: "Diplomacy", pct: 0.0 },
+    { name: "Technology & Doctrine", pct: 0.0 },
+    { name: "AI", pct: 0.0 },
+    { name: "Interface", pct: 0.0 },
+    { name: "Save & Load", pct: 0.0 },
+    { name: "Scenario Editor", pct: 0.0 }
+  ];
+  var list = document.getElementById("list");
+  items.forEach(function (it) {
+    var li = document.createElement("li");
+    li.innerHTML = '<div class="row"><span class="name"></span><span class="pct"></span></div>' +
+                   '<div class="bar"><div class="fill"></div></div>';
+    li.querySelector(".name").textContent = it.name;
+    li.querySelector(".pct").textContent = it.pct.toFixed(1) + "%";
+    li.querySelector(".fill").style.width = it.pct + "%";
+    list.appendChild(li);
+  });
+</script>
+</body>
+</html>
