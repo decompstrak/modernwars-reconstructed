@@ -65,17 +65,17 @@
   ];
   // Estimated understanding of the original game's behavior per system (0-100). Updated by hand.
   var decoded = [
-    { name: "Map & Geography", pct: 18 },
-    { name: "Game Clock & Speed", pct: 70 },
-    { name: "Movement & Terrain", pct: 20 },
-    { name: "Combat & Fronts", pct: 15 },
-    { name: "Mobilisation & Supply", pct: 5 },
+    { name: "Map & Geography", pct: 35 },
+    { name: "Game Clock & Speed", pct: 75 },
+    { name: "Movement & Terrain", pct: 35 },
+    { name: "Combat & Fronts", pct: 35 },
+    { name: "Mobilisation & Supply", pct: 15 },
     { name: "Diplomacy", pct: 3 },
-    { name: "Technology & Doctrine", pct: 3 },
-    { name: "AI", pct: 3 },
-    { name: "Interface", pct: 15 },
-    { name: "Save & Load", pct: 6 },
-    { name: "Scenario Editor", pct: 12 }
+    { name: "Technology & Doctrine", pct: 20 },
+    { name: "AI", pct: 8 },
+    { name: "Interface", pct: 20 },
+    { name: "Save & Load", pct: 12 },
+    { name: "Scenario Editor", pct: 18 }
   ];
   var sum = 0;
   decoded.forEach(function (d) { sum += d.pct; });
@@ -88,7 +88,12 @@
     ["Experiments completed", "5 (repeatability x2, curve fit, speed steps, frame-rate test)"],
     ["Game rules measured", "speed steps, terrain speed factors, frame-rate dependence"],
     ["Simulation repeatable?", "yes, in recordings and in a test harness"],
-    ["Original engine library running in our test harness", "yes (66 classes, 794 methods)"]
+    ["Original engine library running in our test harness", "yes (66 classes, 794 methods)"],
+    ["Real scenario loaded in the test harness", "yes (2022 world map, 203 countries)"],
+    ["Doctrine system mapped", "20 doctrines, 4 defensive-only"],
+    ["Terrain modifiers confirmed", "mountains: ~45% slower, ~30% less damage taken"],
+    ["Casualty rule confirmed", "a country's losses scale with its own manpower"],
+    ["Test-harness war vs real recordings", "running, but numbers don't match yet — investigating the difference"]
   ];
 
   function bars(listId, data) {
