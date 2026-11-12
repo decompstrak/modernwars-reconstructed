@@ -25,6 +25,10 @@
   li:first-child .pct { color:var(--text); font-weight:700; font-size:1.15rem; }
   .bar { height:8px; background:var(--bar); border-radius:999px; margin-top:10px; overflow:hidden; }
   .fill { height:100%; background:var(--fill); border-radius:999px; }
+  h2 { font-size:1.5rem; margin:48px 0 8px; letter-spacing:-0.01em; }
+  h3 { font-size:1.05rem; margin:28px 0 10px; color:var(--muted); font-weight:600; }
+  ul.facts li { padding:12px 20px; display:flex; justify-content:space-between; gap:12px; }
+  ul.facts .v { font-variant-numeric:tabular-nums; font-weight:600; text-align:right; }
   footer { color:var(--muted); font-size:.85rem; margin-top:24px; }
 </style>
 </head>
@@ -33,6 +37,12 @@
   <h1>Modern Wars Reconstructed</h1>
   <p class="sub">Independent, from-scratch Godot reconstruction. Research phase.</p>
   <ul id="list"></ul>
+
+  <h2>Decoded Code</h2>
+  <p class="sub">How much of the original game's behavior we understand so far. These are our own estimates, not measurements. Understanding a system is not the same as having rebuilt it.</p>
+  <ul id="decoded"></ul>
+  <h3>Facts so far</h3>
+  <ul id="facts" class="facts"></ul>
   <footer>Unofficial fan project, not affiliated with the original game. No original code or assets are used.</footer>
 </main>
 <script>
@@ -51,15 +61,55 @@
     { name: "Save & Load", pct: 0.0 },
     { name: "Scenario Editor", pct: 0.0 }
   ];
-  var list = document.getElementById("list");
-  items.forEach(function (it) {
+  // Estimated understanding of the original game's behavior per system (0-100). Updated by hand.
+  var decoded = [
+    { name: "Map & Geography", pct: 10 },
+    { name: "Game Clock & Speed", pct: 35 },
+    { name: "Movement & Terrain", pct: 20 },
+    { name: "Combat & Fronts", pct: 12 },
+    { name: "Mobilisation & Supply", pct: 5 },
+    { name: "Diplomacy", pct: 3 },
+    { name: "Technology & Doctrine", pct: 3 },
+    { name: "AI", pct: 3 },
+    { name: "Interface", pct: 15 },
+    { name: "Save & Load", pct: 3 },
+    { name: "Scenario Editor", pct: 3 }
+  ];
+  var sum = 0;
+  decoded.forEach(function (d) { sum += d.pct; });
+  decoded.unshift({ name: "Decoded Code (overall, average of the systems below)", pct: sum / decoded.length });
+
+  var facts = [
+    ["Functions labelled in the original's native code", "619 of 12,271"],
+    ["Source files identified in that code", "112 (77 Rust, 35 C++)"],
+    ["Gameplay recordings analysed", "5"],
+    ["Experiments completed", "2 (determinism, casualty curve fit)"],
+    ["Game rules measured", "speed steps, terrain speed factors"],
+    ["Simulation repeatable?", "yes, three matching runs"]
+  ];
+
+  function bars(listId, data) {
+    var ul = document.getElementById(listId);
+    data.forEach(function (it) {
+      var li = document.createElement("li");
+      li.innerHTML = '<div class="row"><span class="name"></span><span class="pct"></span></div>' +
+                     '<div class="bar"><div class="fill"></div></div>';
+      li.querySelector(".name").textContent = it.name;
+      li.querySelector(".pct").textContent = it.pct.toFixed(1) + "%";
+      li.querySelector(".fill").style.width = it.pct + "%";
+      ul.appendChild(li);
+    });
+  }
+  bars("list", items);
+  bars("decoded", decoded);
+
+  var fl = document.getElementById("facts");
+  facts.forEach(function (f) {
     var li = document.createElement("li");
-    li.innerHTML = '<div class="row"><span class="name"></span><span class="pct"></span></div>' +
-                   '<div class="bar"><div class="fill"></div></div>';
-    li.querySelector(".name").textContent = it.name;
-    li.querySelector(".pct").textContent = it.pct.toFixed(1) + "%";
-    li.querySelector(".fill").style.width = it.pct + "%";
-    list.appendChild(li);
+    li.innerHTML = '<span></span><span class="v"></span>';
+    li.children[0].textContent = f[0];
+    li.children[1].textContent = f[1];
+    fl.appendChild(li);
   });
 </script>
 </body>
