@@ -29,6 +29,8 @@
   h3 { font-size:1.05rem; margin:28px 0 10px; color:var(--muted); font-weight:600; }
   ul.facts li { padding:12px 20px; display:flex; justify-content:space-between; gap:12px; }
   ul.facts .v { font-variant-numeric:tabular-nums; font-weight:600; text-align:right; }
+  ul.playable .fill { background:#2ea043; }
+  @media (prefers-color-scheme: light) { ul.playable .fill { background:#1a7f37; } }
   footer { color:var(--muted); font-size:.85rem; margin-top:24px; }
 </style>
 </head>
@@ -39,6 +41,10 @@
   <h2>Overall</h2>
   <p class="sub">How much we actually rebuilt based off our reconstruction.</p>
   <ul id="list"></ul>
+
+  <h2>Working Decoded Code + Playable Code</h2>
+  <p class="sub">A private, debug build assembled from the original's own recovered project files (not our own rebuild) now runs standalone on our machine, independent of Steam entirely. This is a reference platform to test against, not the reconstruction itself — "Fully Reconstructed" above is what tracks our own, independently-written code, and stays honest at 0% until we've actually written something.</p>
+  <ul id="playable" class="playable"></ul>
 
   <h2>Decoded Code</h2>
   <p class="sub">How much of the original game's behavior we understand so far. These are our own estimates, not measurements. Understanding a system is not the same as having rebuilt it.</p>
@@ -63,6 +69,14 @@
     { name: "Save & Load", pct: 0.0 },
     { name: "Scenario Editor", pct: 0.0 }
   ];
+  // Milestones for getting a real, playable instance running on our own machine (0-100).
+  var playable = [
+    { name: "Original native library runs standalone", pct: 100 },
+    { name: "Zero Steam dependency (verified with Steam fully closed)", pct: 100 },
+    { name: "Recovered project boots to the real main menu", pct: 100 },
+    { name: "Real 2022 world-map scenario loads and plays", pct: 100 }
+  ];
+
   // Estimated understanding of the original game's behavior per system (0-100). Updated by hand.
   var decoded = [
     { name: "Map & Geography", pct: 35 },
@@ -73,9 +87,9 @@
     { name: "Diplomacy", pct: 3 },
     { name: "Technology & Doctrine", pct: 20 },
     { name: "AI", pct: 8 },
-    { name: "Interface", pct: 20 },
-    { name: "Save & Load", pct: 12 },
-    { name: "Scenario Editor", pct: 18 }
+    { name: "Interface", pct: 30 },
+    { name: "Save & Load", pct: 15 },
+    { name: "Scenario Editor", pct: 20 }
   ];
   var sum = 0;
   decoded.forEach(function (d) { sum += d.pct; });
@@ -93,7 +107,9 @@
     ["Doctrine system mapped", "20 doctrines, 4 defensive-only"],
     ["Terrain modifiers confirmed", "mountains: ~45% slower, ~30% less damage taken"],
     ["Casualty rule confirmed", "a country's losses scale with its own manpower"],
-    ["Test-harness war vs real recordings", "running, but numbers don't match yet — investigating the difference"]
+    ["Test-harness war vs real recordings", "running, but numbers don't match yet — investigating the difference"],
+    ["Steam dependency", "removed — runs standalone, verified with Steam fully closed"],
+    ["Real main menu verified", "yes (title screen, PLAY / LOAD FILE / EDITOR / SETTINGS)"]
   ];
 
   function bars(listId, data) {
@@ -109,6 +125,7 @@
     });
   }
   bars("list", items);
+  bars("playable", playable);
   bars("decoded", decoded);
 
   var fl = document.getElementById("facts");
