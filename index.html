@@ -65,17 +65,17 @@
   ];
   // Estimated understanding of the original game's behavior per system (0-100). Updated by hand.
   var decoded = [
-    { name: "Map & Geography", pct: 10 },
-    { name: "Game Clock & Speed", pct: 35 },
+    { name: "Map & Geography", pct: 18 },
+    { name: "Game Clock & Speed", pct: 70 },
     { name: "Movement & Terrain", pct: 20 },
-    { name: "Combat & Fronts", pct: 12 },
+    { name: "Combat & Fronts", pct: 15 },
     { name: "Mobilisation & Supply", pct: 5 },
     { name: "Diplomacy", pct: 3 },
     { name: "Technology & Doctrine", pct: 3 },
     { name: "AI", pct: 3 },
     { name: "Interface", pct: 15 },
-    { name: "Save & Load", pct: 3 },
-    { name: "Scenario Editor", pct: 3 }
+    { name: "Save & Load", pct: 6 },
+    { name: "Scenario Editor", pct: 12 }
   ];
   var sum = 0;
   decoded.forEach(function (d) { sum += d.pct; });
@@ -85,9 +85,10 @@
     ["Functions labelled in the original's native code", "619 of 12,271"],
     ["Source files identified in that code", "112 (77 Rust, 35 C++)"],
     ["Gameplay recordings analysed", "5"],
-    ["Experiments completed", "2 (determinism, casualty curve fit)"],
-    ["Game rules measured", "speed steps, terrain speed factors"],
-    ["Simulation repeatable?", "yes, three matching runs"]
+    ["Experiments completed", "5 (repeatability x2, curve fit, speed steps, frame-rate test)"],
+    ["Game rules measured", "speed steps, terrain speed factors, frame-rate dependence"],
+    ["Simulation repeatable?", "yes, in recordings and in a test harness"],
+    ["Original engine library running in our test harness", "yes (66 classes, 794 methods)"]
   ];
 
   function bars(listId, data) {
